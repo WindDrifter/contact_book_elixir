@@ -10,6 +10,7 @@ defmodule Phonebook.Application do
     children = [
       # Start the endpoint when the application starts
       PhonebookWeb.Endpoint,
+      {Phoenix.PubSub, [name: Phonebook.PubSub, adapter: Phoenix.PubSub.PG2]},
       Phonebook.Repo,
       {Absinthe.Subscription, [PhonebookWeb.Endpoint]},
       Phonebook.ResolverCounter

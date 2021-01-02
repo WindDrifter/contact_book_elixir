@@ -9,6 +9,7 @@ defmodule PhonebookWeb.Schema.Mutations.User do
       arg :name, :string
       arg :email, :string
       resolve &PhonebookWeb.Resolvers.User.update/2
+      middleware PhonebookWeb.Middleware.HandleError
     end
     @desc "Create a new user and its preferences, by default both preferences are set to false. Id is auto generated"
     field :create_user, :user do
@@ -16,6 +17,8 @@ defmodule PhonebookWeb.Schema.Mutations.User do
       arg :email, non_null(:string)
       arg :preference, non_null(:contract_preferences_input)
       resolve &PhonebookWeb.Resolvers.User.create_user/2
+      middleware PhonebookWeb.Middleware.HandleError
+
     end
     @desc "Update a user preferences"
 

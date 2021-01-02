@@ -24,6 +24,7 @@ defmodule PhonebookWeb.Resolvers.User do
     Account.update_user(id, Map.delete(params, :id))
   end
 
+  @spec create_user(any, any) :: {:error, %{optional(atom) => [any]}} | {:ok, any}
   def create_user(params, _) do
     update_process_state("create_user")
     Account.create_user(params)
@@ -34,7 +35,6 @@ defmodule PhonebookWeb.Resolvers.User do
     %{user_id: user_id} = params
     Account.update_user_preferences(String.to_integer(user_id), Map.delete(params, :user_id))
   end
-
 
   defp update_process_state(key) do
     Phonebook.ResolverCounter.increment_by_one(key)

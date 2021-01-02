@@ -28,6 +28,12 @@ defmodule PhonebookWeb.Schema do
     Map.put(ctx, :loader, dataloader)
   end
 
+  def middleware(middleware, %{identifier: identifier} = _field, _object) when identifier in [:mutation] do
+    middleware ++ [Phonebook.HandleError]
+  end
+  def middleware(middleware, _, _) do
+    middleware
+  end
   def plugins do
     [Absinthe.Middleware.Dataloader] ++ Absinthe.Plugin.defaults()
   end

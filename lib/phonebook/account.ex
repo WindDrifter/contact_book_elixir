@@ -1,7 +1,6 @@
 defmodule Phonebook.Account do
   alias Phonebook.Account.{User}
   alias EctoShorts.Actions
-
   def all_users(params \\ %{}) do
     # Have to split the params map due to 2 keys are for preference
     # otherwise the preference will not be search
@@ -21,7 +20,10 @@ defmodule Phonebook.Account do
   end
 
   def find_user(params \\ %{}) do
-    Actions.find(User, params)
+    case Actions.find(User, params) do
+      {:ok, result} ->  {:ok, result}
+      {:error, things} -> {:error, things}
+    end
   end
 
   def update_user(id ,params) do
@@ -29,15 +31,24 @@ defmodule Phonebook.Account do
   end
 
   def create_user(params) do
-    Actions.create(User, params)
+    case Actions.create(User, params) do
+      {:ok, result} ->  {:ok, result}
+      {:error, changeset} -> {:error, changeset}
+    end
   end
 
   def update_user_preferences(id, params) do
-    with {:ok, schema} <- Actions.update(User, id, %{preference: params}) do
-      result = Map.from_struct(schema.preference)
-      result = Map.put_new(result, :user_id, schema.id)
-      {:ok, result}
+    case Actions.update(User, id, %{preference: params}) do
+      {:ok, schema} -> format_result(schema)
+      {:error, changeset} -> {:error, changeset}
     end
+  end
+
+  defp format_result(schema) do
+    result = schema.preference
+    |> Map.from_struct()
+    |> Map.put_new(:user_id, schema.id)
+    {:ok, result}
   end
 
 end

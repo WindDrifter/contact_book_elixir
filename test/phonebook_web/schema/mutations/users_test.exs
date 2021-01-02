@@ -42,7 +42,7 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
   describe "@create_user" do
 
     test "able to create user" do
-      assert {:ok, %{data: data}} = Absinthe.run(@create_user_doc, Schema,
+      assert {:ok, %{data: _data}} = Absinthe.run(@create_user_doc, Schema,
       variables: %{
         "email" => "test@test.com",
         "name" => "name1",
@@ -52,7 +52,23 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
       {:ok, user} = Account.find_user(%{email: "test@test.com"})
       assert user.name === "name1"
     end
+    test "not able to create user with same email" do
+      new_user = %{
+        "email" => "test@test.com",
+        "name" => "name1"
+        }
+      assert {:ok, user} = Account.create_user(new_user)
 
+      assert {:ok,  %{errors: errors} } = Absinthe.run(@create_user_doc, Schema,
+      variables: %{
+        "email" => "test@test.com",
+        "name" => "name1",
+        "preference" => %{"likes_emails"=> true, "likes_phone_calls" => true}
+        }
+      )
+      [first_error|_] = errors
+      assert first_error.code === :conflict
+    end
     test "return errors if at least one important params is missing" do
       assert {:ok, %{errors: errors}} = Absinthe.run(@create_user_doc, Schema,
       variables: %{
@@ -68,7 +84,7 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
     setup [:setup_user]
     test "able to update user", context do
       id = to_string(context[:id])
-      assert {:ok, %{data: data}} = Absinthe.run(@update_user_doc, Schema,
+      assert {:ok, %{data: _data}} = Absinthe.run(@update_user_doc, Schema,
       variables: %{
         "id" => id,
         "email" => "update_email@email.com",
@@ -86,7 +102,7 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
     setup [:setup_user]
     test "able to update user pref", context do
       id = to_string(context[:id])
-      assert {:ok, %{data: data}} = Absinthe.run(@update_user_pref_doc, Schema,
+      assert {:ok, %{data: _data}} = Absinthe.run(@update_user_pref_doc, Schema,
       variables: %{
         "id" => id,
         "likes_emails"=> true,
@@ -97,6 +113,17 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
       assert {:ok, user_pref} = Actions.find(Preference, id: user2.preference_id)
       assert user_pref.likes_phone_calls === true
     end
+    test "return error if id doesn't exist ", context do
+      id = to_string(context[:id]+1)
+      assert {:ok, %{errors: errors}} = Absinthe.run(@update_user_pref_doc, Schema,
+      variables: %{
+        "id" => id,
+        "likes_emails"=> true,
+        "likes_phone_calls" => true
+        }
+      )
+      [first_error|_] = errors
+      assert first_error.code === :not_found
+    end
   end
 end
-

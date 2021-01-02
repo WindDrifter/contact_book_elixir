@@ -60,6 +60,16 @@ defmodule PhonebookWeb.Schema.Queries.UserTest do
       )
       assert data["user"]["name"] === user.name
     end
+    test "return error if id not exist", context do
+      user = context[:user]
+      id = to_string(user.id+1)
+      assert {:ok, %{errors: errors}} = Absinthe.run(@get_user_doc, Schema,
+        variables: %{"id"=> id}
+      )
+      [first_error|_] = errors
+      assert first_error.code === :not_found
+
+    end
     test "return errors if id is missing" do
       assert {:ok, %{errors: errors}} = Absinthe.run(@get_user_doc, Schema,
       variables: %{}
@@ -70,4 +80,3 @@ defmodule PhonebookWeb.Schema.Queries.UserTest do
   end
 
 end
-

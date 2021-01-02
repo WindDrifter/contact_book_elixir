@@ -10,8 +10,8 @@ use Mix.Config
 
 config :phonebook, Phonebook.Repo,
   database: "phonebook_repo",
-  username: "postgres",
-  password: "postgres",
+  username: "ryan",
+  password: "testing",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
@@ -20,14 +20,14 @@ config :phonebook,
 
 config :ecto_shorts,
   repo: Phonebook.Repo,
-  error_module: EctoShorts.Action.Error
+  error_module: EctoShorts.Actions.Error
 
 # Configures the endpoint
 config :phonebook, PhonebookWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "EIBEYgDQS0Qdh3NSKi2CgkkvYPRxq3s+TNoY0IIi0cKAJNlv9AfFQV9s1jRSGDr1",
   render_errors: [view: PhonebookWeb.ErrorView, accepts: ~w(json)],
-  pubsub: [name: Phonebook.PubSub, adapter: Phoenix.PubSub.PG2],
+  pubsub_server: Phonebook.PubSub,
   live_view: [signing_salt: "6VyQ7uPb"]
 
 # Configures Elixir's Logger

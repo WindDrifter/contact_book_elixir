@@ -7,6 +7,7 @@ defmodule PhonebookWeb.Schema.Queries.User do
       arg :id, non_null(:id)
       arg :names, list_of(:string)
       resolve &Resolvers.User.find/2
+      middleware PhonebookWeb.Middleware.HandleError
     end
     field :users, list_of(:user) do
       arg :likes_emails, :boolean
