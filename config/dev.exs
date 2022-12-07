@@ -1,4 +1,4 @@
-use Mix.Config
+import Config
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -12,6 +12,15 @@ config :phonebook, PhonebookWeb.Endpoint,
   code_reloader: true,
   check_origin: false,
   watchers: []
+
+config :phonebook, Phonebook.Repo,
+  database: "phonebook_repo_dev",
+  username: "postgres",
+  password: "postgres",
+  hostname: "localhost",
+  stacktrace: true,
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
 
 # ## SSL Support
 #

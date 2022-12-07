@@ -5,13 +5,12 @@
 # is restricted to this project.
 
 # General application configuration
-use Mix.Config
-
+import Config
 
 config :phonebook, Phonebook.Repo,
   database: "phonebook_repo",
-  username: "ryan",
-  password: "testing",
+  username: "postgres",
+  password: "postgres",
   hostname: "localhost",
   pool: Ecto.Adapters.SQL.Sandbox
 
