@@ -1,6 +1,8 @@
 defmodule Phonebook.Account do
-  alias Phonebook.Account.{User}
+  alias Phonebook.Account.User
   alias EctoShorts.Actions
+
+  @spec all_users(map) :: list(User.t())
   def all_users(params \\ %{}) do
     # Have to split the params map due to 2 keys are for preference
     # otherwise the preference will not be search
@@ -19,36 +21,30 @@ defmodule Phonebook.Account do
     User.by_likes_phone_calls(query, value)
   end
 
-  def find_user(params \\ %{}) do
-    case Actions.find(User, params) do
-      {:ok, result} ->  {:ok, result}
-      {:error, things} -> {:error, things}
-    end
-  end
+  # @spec find_user(map()) :: {:ok, User.t()}
+  # def find_user(params \\ %{}) do
+  #   Actions.find(User, params)
+  # end
 
-  def update_user(id ,params) do
+  def update_user(id, params) do
     Actions.update(User, id, params)
   end
 
+  @spec create_user(any) :: {:error, User.t()} | {:ok, User.t()}
   def create_user(params) do
-    case Actions.create(User, params) do
-      {:ok, result} ->  {:ok, result}
-      {:error, changeset} -> {:error, changeset}
-    end
+    Actions.create(User, params)
   end
 
   def update_user_preferences(id, params) do
-    case Actions.update(User, id, %{preference: params}) do
-      {:ok, schema} -> format_result(schema)
-      {:error, changeset} -> {:error, changeset}
+    with {:ok, schema} <- Actions.update(User, id, %{preference: params}) do
+      format_result(schema)
     end
   end
 
   defp format_result(schema) do
-    result = schema.preference
+    schema.preference
     |> Map.from_struct()
     |> Map.put_new(:user_id, schema.id)
-    {:ok, result}
+    |> then(& {:ok, &1})
   end
-
 end

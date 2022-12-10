@@ -13,7 +13,7 @@ defmodule Phonebook.ResolverCounter do
   end
 
   def get_current_count_by_key(name \\ @default_name, key) do
-    Agent.get(name, fn state -> {:ok,  Map.get(state, key) || 0} end)
+    Agent.get(name, fn state -> {:ok, Map.get(state, key) || 0} end)
   end
 
   def get_current_state(name \\ @default_name) do
@@ -23,5 +23,4 @@ defmodule Phonebook.ResolverCounter do
   def erase_state(name \\ @default_name) do
     Agent.update(name, fn _state -> %{} end)
   end
-
 end

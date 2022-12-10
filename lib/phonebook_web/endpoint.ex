@@ -5,7 +5,6 @@ defmodule PhonebookWeb.Endpoint do
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
 
-
   socket "/socket", PhonebookWeb.UserSocket,
     websocket: true,
     longpoll: false

@@ -1,5 +1,4 @@
 defmodule Phonebook.DataCase do
-
   use ExUnit.CaseTemplate
 
   using do

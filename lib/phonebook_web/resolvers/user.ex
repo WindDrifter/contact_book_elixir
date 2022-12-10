@@ -1,9 +1,12 @@
 defmodule PhonebookWeb.Resolvers.User do
+  @moduledoc false
   alias Phonebook.Account
+
   def all(params, _) do
     update_process_state("all_users")
 
     result = Account.all_users(params)
+
     if is_list(result) do
       # never know if Account.all_users will return something else
       {:ok, result}

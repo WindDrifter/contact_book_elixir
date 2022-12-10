@@ -1,5 +1,6 @@
 defmodule Phonebook.Support.UserSupport do
   alias Phonebook.Account
+
   def generate_users do
     for n <- 1..3 do
       Account.create_user(%{
@@ -11,6 +12,7 @@ defmodule Phonebook.Support.UserSupport do
         }
       })
     end
+
     for n <- 4..6 do
       Account.create_user(%{
         name: "test user #{n}",
@@ -22,6 +24,7 @@ defmodule Phonebook.Support.UserSupport do
       })
     end
   end
+
   def generate_user do
     Account.create_user(%{
       name: "random user",
@@ -32,5 +35,4 @@ defmodule Phonebook.Support.UserSupport do
       }
     })
   end
-
 end

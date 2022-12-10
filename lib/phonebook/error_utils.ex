@@ -1,14 +1,13 @@
 defmodule Phonebook.ErrorUtils do
-
   def format_errors(errors) do
     case errors[:code] do
       :not_found -> not_found(errors)
       :conflict -> conflict(errors)
       _ -> check_error(errors)
     end
-
   end
-  def check_error([_error|_] = _errors) do
+
+  def check_error([_error | _] = _errors) do
     internal_server_error_found()
   end
 
@@ -17,10 +16,12 @@ defmodule Phonebook.ErrorUtils do
   end
 
   def not_found(errors) do
-    table_name = errors[:query]
-    |> to_string()
-    |> String.split(".")
-    |> List.last()
+    table_name =
+      errors[:query]
+      |> to_string()
+      |> String.split(".")
+      |> List.last()
+
     id_not_found = errors[:details].params.id
 
     message = "#{table_name} with id: #{id_not_found} not found"
@@ -28,7 +29,6 @@ defmodule Phonebook.ErrorUtils do
   end
 
   def internal_server_error_found() do
-    {:error, %{code: :internal_server_error,
-    message: "Something went wrong in our end"} }
+    {:error, %{code: :internal_server_error, message: "Something went wrong in our end"}}
   end
 end

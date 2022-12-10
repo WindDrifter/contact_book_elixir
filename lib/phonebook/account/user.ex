@@ -1,18 +1,25 @@
 defmodule Phonebook.Account.User do
+  @moduledoc false
+  @type t :: %__MODULE__{
+    email: String.t(),
+    name: String.t()
+  }
+  @type t_res() :: {:ok, t()} | {:error, any()}
   import Ecto.Changeset
   import Ecto.Query
   use Ecto.Schema
   alias EctoShorts.CommonChanges
-  alias Phonebook.Repo
-  schema "users" do
-    field :email, :string
-    field :name, :string
-    belongs_to :preference, Phonebook.Account.Preference, on_replace: :update
 
+  schema "users" do
+    field(:email, :string)
+    field(:name, :string)
+    belongs_to(:preference, Phonebook.Account.Preference, on_replace: :update)
   end
+
   @required_fields [:email, :name]
   @available_fields [:id, :preference_id | @required_fields]
 
+  @spec join_preferences(any) :: Ecto.Query.t()
   def join_preferences(query \\ Phonebook.Account.User) do
     join(query, :inner, [u], p in assoc(u, :preference), as: :preference)
   end
@@ -28,6 +35,7 @@ defmodule Phonebook.Account.User do
   def create_changeset(params) do
     changeset(%Phonebook.Account.User{}, params)
   end
+
   @doc false
   def changeset(user, attrs) do
     user
@@ -37,5 +45,4 @@ defmodule Phonebook.Account.User do
     |> unique_constraint(:email)
     |> CommonChanges.preload_change_assoc(:preference)
   end
-
 end
