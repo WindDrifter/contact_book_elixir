@@ -103,7 +103,8 @@ defmodule PhonebookWeb.Schema.Mutations.UserTest do
                  }
                )
 
-      assert {:ok, %{email: "update_email@email.com", name: "new_name"}} = Account.find_user(%{id: id})
+      assert {:ok, %{email: "update_email@email.com", name: "new_name"}} =
+               Account.find_user(%{id: id})
     end
   end
 

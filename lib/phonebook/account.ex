@@ -48,6 +48,6 @@ defmodule Phonebook.Account do
     schema.preference
     |> Map.from_struct()
     |> Map.put_new(:user_id, schema.id)
-    |> then(& {:ok, &1})
+    |> then(&{:ok, &1})
   end
 end

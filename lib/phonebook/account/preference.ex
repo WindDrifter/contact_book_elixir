@@ -1,8 +1,8 @@
 defmodule Phonebook.Account.Preference do
   @type preference :: %__MODULE__{
-    likes_emails: boolean(),
-    likes_phone_calls: boolean()
-  }
+          likes_emails: boolean(),
+          likes_phone_calls: boolean()
+        }
 
   use Ecto.Schema
   import Ecto.Changeset

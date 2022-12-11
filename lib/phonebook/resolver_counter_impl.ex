@@ -1,6 +1,6 @@
 defmodule Phonebook.ResolverCounter.Impl do
   def key_incrementor(state, key) do
-    Map.update(state, key, 1, & &1 + 1)
+    Map.update(state, key, 1, &(&1 + 1))
   end
 
   def get_resolver_count(key) do

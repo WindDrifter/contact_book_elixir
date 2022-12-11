@@ -1,9 +1,9 @@
 defmodule Phonebook.Account.User do
   @moduledoc false
   @type t :: %__MODULE__{
-    email: String.t(),
-    name: String.t()
-  }
+          email: String.t(),
+          name: String.t()
+        }
   @type t_res() :: {:ok, t()} | {:error, any()}
   import Ecto.Changeset
   import Ecto.Query
