@@ -16,7 +16,7 @@ defmodule Phonebook.AccountTest do
       new_user = %{name: "test user", email: "test@test.com"}
       new_user2 = %{name: "test user2", email: "test@test.com"}
       assert {:ok, _} = Account.create_user(new_user)
-      assert {:error, message} = Account.create_user(new_user2)
+      assert {:error, _} = Account.create_user(new_user2)
     end
 
     test "not able to create user if an important param is missing" do

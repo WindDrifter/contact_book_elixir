@@ -10,12 +10,12 @@ defmodule PhonebookWeb.UserChannel do
     {:reply, %{"accepted" => true}, socket}
   end
 
-  def handle_in(id, %{"user_id" => user_id}, socket) do
+  def handle_in(id, %{"user_id" => user_id}, socket) when id === user_id do
     # this if for update preferences check
     # it will boardcast certain user id update
-    if id === user_id do
       broadcast("update_preferences", socket, %{"user_id" => user_id})
       {:reply, %{"accepted" => true}, socket}
-    end
   end
+
+  def handle_in(_, _, socket), do: nil
 end

@@ -32,7 +32,7 @@ defmodule Phonebook.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.5.7"},
+      {:phoenix, "~> 1.6.0"},
       {:phoenix_pubsub, "~> 2.0.0"},
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
@@ -40,8 +40,9 @@ defmodule Phonebook.MixProject do
       {:absinthe, "~> 1.5.4"},
       {:absinthe_plug, "~> 1.5.1"},
       {:absinthe_phoenix, "~> 2.0"},
-      {:dataloader, "~>1.0"},
-      {:ecto_shorts, "~>0.1.7"},
+      {:dataloader, "~> 1.0"},
+      {:ecto_shorts, "~> 2.0.0"},
+      {:gen_stage, "~> 1.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.5.3"},
       {:postgrex, "~> 0.15"},

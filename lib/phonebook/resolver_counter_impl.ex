@@ -1,10 +1,6 @@
 defmodule Phonebook.ResolverCounter.Impl do
   def key_incrementor(state, key) do
-    if Map.get(state, key) === nil do
-      Map.put(state, key, 1)
-    else
-      Map.put(state, key, state[key] + 1)
-    end
+    Map.update(state, key, 1, & &1 + 1)
   end
 
   def get_resolver_count(key) do
