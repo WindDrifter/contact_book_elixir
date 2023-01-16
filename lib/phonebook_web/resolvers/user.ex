@@ -15,7 +15,7 @@ defmodule PhonebookWeb.Resolvers.User do
     end
   end
 
-  def find(%{id: id}, _) do
+  def find(%{id: id} = _params, _) do
     id = String.to_integer(id)
     update_process_state("find_user")
     Account.find_user(%{id: id})

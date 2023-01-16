@@ -11,7 +11,7 @@ defmodule Phonebook.Account do
     # otherwise unbind error will be thrown
     preferences
     |> Enum.reduce(User.join_preferences(), &convert_field_to_query/2)
-    |> Actions.all(query, params)
+    |> Actions.all(params)
   end
 
   defp convert_field_to_query({:likes_emails, value}, query) do
