@@ -41,7 +41,7 @@ defmodule Phonebook.MixProject do
       {:absinthe_plug, "~> 1.5.1"},
       {:absinthe_phoenix, "~> 2.0"},
       {:dataloader, "~> 1.0"},
-      {:ecto_shorts, "~> 2.0.0"},
+      {:ecto_shorts, "~> 2.2.0"},
       {:gen_stage, "~> 1.0"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false},
       {:ecto_sql, "~> 3.5.3"},

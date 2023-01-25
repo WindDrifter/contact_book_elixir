@@ -7,7 +7,7 @@ defmodule PhonebookWeb.Schema do
   import_types(PhonebookWeb.Schema.Queries.Counter)
   import_types(PhonebookWeb.Schema.Mutations.User)
   import_types(PhonebookWeb.Schema.Subscriptions.User)
-
+  alias PhonebookWeb.Middleware.HandleError
   query do
     import_fields(:user_queries)
     import_fields(:counter_queries)
@@ -28,9 +28,9 @@ defmodule PhonebookWeb.Schema do
     Map.put(ctx, :loader, dataloader)
   end
 
-  def middleware(middleware, %{identifier: identifier} = _field, _object)
-      when identifier in [:mutation] do
-    middleware ++ [Phonebook.HandleError]
+  def middleware(middleware, _field, %{identifier: identifier} = _object)
+      when identifier in [:mutation, :query] do
+    middleware ++ [HandleError]
   end
 
   def middleware(middleware, _, _) do

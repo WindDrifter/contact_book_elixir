@@ -5,8 +5,8 @@ defmodule PhonebookWeb.UserChannel do
     {:ok, socket}
   end
 
-  @spec handle_in(any, any, any) ::
-          {:error, any} | {:noreply, nil, any} | {:reply, {:ok, map}, Phoenix.Socket.t()}
+  @spec handle_in(String.t(), any, Phoenix.Socket.t()) ::
+          {:noreply, Phoenix.Socket.t()} | {:reply, {:ok, map}, Phoenix.Socket.t()}
   def handle_in("new_user", %{"id" => id}, socket) do
     with :ok <- broadcast(socket, "new_user", %{"id" => id}) do
       {:reply, {:ok, %{"accepted" => true}}, socket}
@@ -21,5 +21,5 @@ defmodule PhonebookWeb.UserChannel do
     end
   end
 
-  def handle_in(_, _, socket), do: {:noreply, nil, socket}
+  def handle_in(_, _, socket), do: {:noreply, socket}
 end

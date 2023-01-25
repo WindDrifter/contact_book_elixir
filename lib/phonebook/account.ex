@@ -22,7 +22,7 @@ defmodule Phonebook.Account do
     User.by_likes_phone_calls(query, value)
   end
 
-  @spec find_user(map()) :: User.t_res()
+  @spec find_user(map) :: User.t_res()
   def find_user(params \\ %{}) do
     Actions.find(User, params)
   end
